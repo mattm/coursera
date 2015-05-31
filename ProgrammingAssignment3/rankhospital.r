@@ -4,7 +4,7 @@ rankhospital <- function(state, outcome, num = "best") {
   if (! state %in% validStates) {
     stop("invalid state")
   }
-  
+
   validOutcomes = c("heart attack", "heart failure", "pneumonia")
   if (! outcome %in% validOutcomes) {
     stop("invalid outcome")
@@ -17,11 +17,11 @@ rankhospital <- function(state, outcome, num = "best") {
   } else if (outcome == "heart failure") {
     dataColName = "Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure"
   }
-  
+
   stateData = outcomeData[outcomeData$State == state & outcomeData[dataColName] != "Not Available", c("Hospital.Name", dataColName)]
   stateData[,2] = as.numeric(stateData[,2])
   sorted = stateData[order(stateData[dataColName], stateData$Hospital.Name), ]
-  
+
   if (is.numeric(num)) {
     if (num > nrow(sorted)) {
       NA
